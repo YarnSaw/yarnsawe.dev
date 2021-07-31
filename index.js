@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const path = require('path');
 const https = require('https');
 const app = express();
 const redirectHTTP = express();
@@ -17,6 +18,18 @@ redirectHTTP.get(/./, (req, res) => {
 });
 redirectHTTP.listen(redirectPort);
 
+
+app.get('/buddhabrot', (req, res) => {
+	res.sendFile(path.join(__dirname, "..", 'buddhabrot', 'public', 'index.html'));
+});
+
+app.get('/styles.css', (req, res) => {
+	res.sendFile(path.join(__dirname, "..", "buddhabrot", 'public', 'styles.css'));
+});
+
+app.get('/index.min.js', (req, res) => {
+	res.sendFile(path.join(__dirname, '..', 'buddhabrot', 'public', 'dist', 'index.min.js'));
+});
 
 app.get('/', (req, res) => {
 	console.log("User connected");
