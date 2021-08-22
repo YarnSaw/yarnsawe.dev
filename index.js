@@ -39,6 +39,10 @@ app.get('/DnD', (req, res) => {
 	res.sendFile('/var/yarnsawe.dev/dnd.html')
 })
 
+app.get(/DnD\/./, (req, res) => {
+	res.sendFile(path.join('/var/yarnsawe.dev', req.url))
+})
+
 app.get('/', (req, res) => {
 	console.log("User connected");
 	res.send('Hello World!');
@@ -56,5 +60,5 @@ io.on('connection', (client) => {
 });
 
 io.of('/DnD').on('connection', function(socket) {
-	console.log("got a aconnection to the DnD thing now! Cool!");
+	console.log("got a connection to the DnD thing now! Cool!");
 });
