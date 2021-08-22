@@ -2,6 +2,8 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const { Server } = require('socket.io');
+
 const app = express();
 const redirectHTTP = express();
 const port = 443;
@@ -33,12 +35,26 @@ app.get('/buddhabrot/dist/index.min.js', (req, res) => {
 	res.sendFile('/var/yarnsawe.dev/buddhabrot/dist/index.min.js');
 });
 
+app.get('/DnD', (req, res) => {
+	res.sendFile('/var/yarnsawe.dev/dnd.html')
+})
+
 app.get('/', (req, res) => {
 	console.log("User connected");
 	res.send('Hello World!');
 });
 
-https.createServer(options, app).listen(port, () => {
+const server = https.createServer(options, app);
+const io = new Server(server);
+
+server.listen(port, () => {
 	console.log(`Listening on port ${port}`);
 });
 
+io.on('connection', (client) => {
+	console.log("got a connection thing.");
+});
+
+io.of('/DnD').on('connection', function(socket) {
+	console.log("got a aconnection to the DnD thing now! Cool!");
+});
