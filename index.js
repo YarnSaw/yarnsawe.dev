@@ -19,16 +19,18 @@ redirectHTTP.get(/./, (req, res) => {
 redirectHTTP.listen(redirectPort);
 
 
+/** @TODO: use better logic than a case by case basis for sending back files*/
+
 app.get('/buddhabrot', (req, res) => {
-	res.sendFile(path.join(__dirname, "..", 'buddhabrot', 'public', 'index.html'));
+	res.sendFile('/var/yarnsawe.dev/buddhabrot.html');
 });
 
-app.get('/styles.css', (req, res) => {
-	res.sendFile(path.join(__dirname, "..", "buddhabrot", 'public', 'styles.css'));
+app.get('/buddhabrot/styles.css', (req, res) => {
+	res.sendFile('/var/yarnsawe.dev/buddhabrot/styles.css');
 });
 
-app.get('/index.min.js', (req, res) => {
-	res.sendFile(path.join(__dirname, '..', 'buddhabrot', 'public', 'dist', 'index.min.js'));
+app.get('/buddhabrot/dist/index.min.js', (req, res) => {
+	res.sendFile('/var/yarnsawe.dev/buddhabrot/dist/index.min.js');
 });
 
 app.get('/', (req, res) => {
