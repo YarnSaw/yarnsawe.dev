@@ -49,16 +49,12 @@ app.get('/', (req, res) => {
 });
 
 const server = https.createServer(options, app);
+
+// DnD and chatbot stuff
 const io = new Server(server);
+const ConnectionManager  = require('/var/yarnsawe.dev/DnDBackend/connection-manager').ConnectionManager;
+const manager = new ConnectionManager(io, '/DnD');
 
 server.listen(port, () => {
 	console.log(`Listening on port ${port}`);
-});
-
-io.on('connection', (client) => {
-	console.log("got a connection thing.");
-});
-
-io.of('/DnD').on('connection', function(socket) {
-	console.log("got a connection to the DnD thing now! Cool!");
 });
